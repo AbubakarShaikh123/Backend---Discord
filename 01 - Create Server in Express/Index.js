@@ -39,7 +39,7 @@ const testMidFunc = (req,res,next)=>{
 
 //  app.METHOD('ROUTE',(REQ,RES)=>{  })
 
-
+ 
 
 // "testMidFunc" and GLOBAL MIDDLEWARE both will run 
 app.get('/',testMidFunc,(req,res)=>{

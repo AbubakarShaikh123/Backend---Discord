@@ -26,6 +26,7 @@ const path1Obj = path.parse(path1)
 
 
 
+
 // for ES6
 const currentDir = import.meta.dirname
 console.log(import.meta.dirname);
@@ -37,3 +38,4 @@ console.log(import.meta.filename);
 const customPath = path.join(currentDir, 'views', 'index.html')
 
 console.log(customPath);
+

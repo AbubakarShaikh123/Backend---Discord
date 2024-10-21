@@ -7,7 +7,11 @@ import path from 'path'
 const filePath = path.join(import.meta.dirname, "views", "index.html")
 console.log(filePath);
 
-const data = await fs.readFile("./path.js", ()=>{})
+const data =  fs.readFile("C:\\Users\\31415\\OneDrive\\Desktop\\todo.txt", ()=>{
+    console.log(data);
+    
+})
+console.log(data);
 
 const port = 400
 const server = http.createServer((req, res)=>{
