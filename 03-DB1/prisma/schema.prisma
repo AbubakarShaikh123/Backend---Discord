@@ -15,10 +15,14 @@ model User {
   password String
 }
 
-model Address {
+model Posts {
   id Int @id @default(autoincrement())
-  city String
-  landmark String ?
-  pincode String
-  state String
+  title String
+  likes Int @default(0)
+}
+
+model Todos{
+  id Int @id @default(autoincrement())
+  title String
+  completed Boolean @default(false)
 }
