@@ -2,14 +2,27 @@ import prisma from "../utils/prismaClient.js"
 
 export default async function addTodo(req, res) {
    try {
-            const {title} = req.body
-            if (!title) {
-                return res.status(400).json({msg : "title is required for todo"})
+            const {title, userId} = req.body
+            if (!title || !userId) {
+                return res.status(400).json({msg : "All fields are required "})
             }
 
-            await prisma.todos.create({
-                data : {title}
-            })
+            const user = await prisma.user.findFirst({where : {id : userId}})
+            if (!user) {
+                return res.status(400).json({msg : "Invalid userId"})
+            }
+
+            const addTodo = await prisma.user.update({
+                where : {
+                    id : userId},
+                data : {
+                    todos : { create : [{title}]}
+                }
+            }) 
+        
+            if (!addTodo) {
+                return res.status(500).json({msg : "Server Error"})
+            }
 
             res.status(200).json({msg : "todo created"})
    } catch (error) {

@@ -2,16 +2,25 @@ import prisma from "../utils/prismaClient.js";
 
 export default async function deleteTodo(req, res) {
     try {
-        const {id} = req.body
-        if (!id ) {
-            return res.status(400).json({msg : " id is required"})
+        const {userId, todoId} = req.body
+        if (!userId  || !todoId ) {
+            // await prisma.todos.deleteMany({})
+            return res.status(400).json({msg : " all fields are required"})
         }
-        const todo =await prisma.todos.findUnique({where : {id}})
-        if (!todo) {
-                return res.status(400).json({msg : "Invalid Id"})
+        const todo =await prisma.user.findUnique({
+            where : {id : userId},
+            select : {todos : { where:{id:todoId} , select : {id: true, title:true, completed :true}}}
+        })
+        // console.log(todo.todos);
+        
+
+        if (todo.todos.length === 0 ) {
+                return res.status(400).json({msg : "Invalid userID or todoID"})
          }
-        await prisma.todos.delete({ where:{id} })
-        res.status(200).json({msg : "following todo is deleted ", todo})
+         
+        await prisma.todos.delete({ where:{id : todoId} })
+        
+        res.status(200).json({msg : "following todo is deleted ", "todo" : todo.todos})
 
     } catch (error) {
         console.log("Error occured at POST : deleteTodo ",error);

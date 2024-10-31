@@ -11,12 +11,16 @@ model Posts {
   id    Int    @id @default(autoincrement())
   title String
   likes Int    @default(0)
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Todos {
   id        Int     @id @default(autoincrement())
   title     String
   completed Boolean @default(false)
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
 
 model User {
@@ -24,4 +28,6 @@ model User {
   name     String
   email    String
   password String
+  post Posts[]
+  todos Todos[]
 }
